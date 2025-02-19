@@ -1,5 +1,7 @@
 using Microsoft.Extensions.Options;
 using MongoDB.Driver;
+using WeatherReport.BLL.Interfaces;
+using WeatherReport.BLL.Services;
 using WeatherReport.Data.Interfaces;
 using WeatherReport.Data.Repository;
 using WeatherReport.Models;
@@ -20,6 +22,8 @@ builder.Services.AddSingleton<IMongoClient>(c =>
 });
 
 builder.Services.AddScoped<IWeatherRepository, WeatherRepository>();
+
+builder.Services.AddScoped<IWeatherService, WeatherService>();
 
 // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
 builder.Services.AddEndpointsApiExplorer();
