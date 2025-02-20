@@ -1,5 +1,7 @@
-﻿using WeatherReport.BLL.Interfaces;
+﻿using System.Text.Json;
+using WeatherReport.BLL.Interfaces;
 using WeatherReport.Data.Interfaces;
+using WeatherReport.Dto;
 
 namespace WeatherReport.BLL.Services
 {
@@ -9,10 +11,28 @@ namespace WeatherReport.BLL.Services
         private const string CurrentWeatherUrl = "https://api.openweathermap.org/data/2.5/weather?lat={0}&lon={1}&appid={2}";
 
         private readonly IWeatherRepository _weatherRepository;
+        private readonly string _apiKey;
+        private readonly HttpClient _httpClient;
 
-        public WeatherService(IWeatherRepository weatherRepository)
+        public WeatherService(IWeatherRepository weatherRepository, IConfiguration configuration, HttpClient httpClient)
         {
             _weatherRepository = weatherRepository;
+            _apiKey = configuration["Weather:ApiKey"];
+            _httpClient = httpClient;
+        }
+
+        public async Task<CoordinatesDto> GetLocation(string city)
+        {
+            var coordinates = await _httpClient.GetStringAsync(string.Format(GeocodingUrl, city, _apiKey));
+            var location = JsonSerializer.Deserialize<CoordinatesDto>(coordinates);
+            
+            return location;
+        }
+
+        public async Task<string> GetCurrentWeather(double ltn, double lon)
+        {
+            var currentWeather = await _httpClient.GetStringAsync(string.Format(CurrentWeatherUrl, ltn, lon, _apiKey));
+            return currentWeather;
         }
 
 
