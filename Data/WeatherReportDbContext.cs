@@ -4,7 +4,7 @@ using WeatherReport.Models;
 
 namespace WeatherReport.Data
 {
-    public class WeatherReportDbContext
+    public class WeatherReportDbContext 
     {
         private readonly IMongoDatabase _database;
 

@@ -14,19 +14,19 @@ namespace WeatherReport.BLL.Services
         private readonly string _apiKey;
         private readonly HttpClient _httpClient;
 
-        public WeatherService(IWeatherRepository weatherRepository, IConfiguration configuration, HttpClient httpClient)
+        public WeatherService(IWeatherRepository weatherRepository, IConfiguration configuration, IHttpClientFactory httpClientFactory)
         {
             _weatherRepository = weatherRepository;
             _apiKey = configuration["Weather:ApiKey"];
-            _httpClient = httpClient;
+            _httpClient = httpClientFactory.CreateClient();
         }
 
         public async Task<CoordinatesDto> GetLocation(string city)
         {
             var coordinates = await _httpClient.GetStringAsync(string.Format(GeocodingUrl, city, _apiKey));
-            var location = JsonSerializer.Deserialize<CoordinatesDto>(coordinates);
+            var location = JsonSerializer.Deserialize<List<CoordinatesDto>>(coordinates);
             
-            return location;
+            return location.First();
         }
 
         public async Task<string> GetCurrentWeather(double ltn, double lon)

@@ -18,8 +18,9 @@ namespace WeatherReport.Controllers
         [HttpGet]
         public async Task<IActionResult> GetCurrentWeather(string city)
         {
-
-            return Ok();
+            var location = await _weatherService.GetLocation(city);
+            var currentWeather = await _weatherService.GetCurrentWeather(location.Ltn, location.Lon);
+            return Ok(currentWeather);
         }
     }
 }
