@@ -32,20 +32,19 @@ namespace WeatherReport.Controllers
             return Ok(forecast);
         }
 
-        [HttpPost]
+        [HttpPost("add")]
         public async Task<IActionResult> AddWeatherAsync(WeatherDto weatherDto)
         {
             await _weatherService.AddWeatherAsync(weatherDto);
             return Ok();
         }
 
-        [HttpDelete]
+        [HttpDelete("delete")]
         public async Task<IActionResult> DeleteWeather(int weatherId)
         {
             await _weatherService.DeleteWeatherAsync(weatherId);
             return Ok();
         }
-
 
     }
 }

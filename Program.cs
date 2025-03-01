@@ -24,8 +24,10 @@ builder.Services.AddSingleton<IMongoClient>(c =>
 
 builder.Services.AddSingleton<WeatherReportDbContext>();
 
+builder.Services.AddScoped<IUserRepository, UserRepository>();
 builder.Services.AddScoped<IWeatherRepository, WeatherRepository>();
 
+builder.Services.AddScoped<IUserService, UserService>();
 builder.Services.AddScoped<IWeatherService, WeatherService>();
 
 builder.Services.AddHttpClient();
@@ -34,6 +36,8 @@ builder.Services.AddAutoMapper(AppDomain.CurrentDomain.GetAssemblies());
 // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
+
+builder.Services.AddAuthentication();
 
 var app = builder.Build();
 

@@ -14,5 +14,6 @@ namespace WeatherReport.Data
         }
 
         public IMongoCollection<Weather> Weathers => _database.GetCollection<Weather>("Weather");
+        public IMongoCollection<User> Users => _database.GetCollection<User>("User");
     }
 }

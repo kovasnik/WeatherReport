@@ -10,6 +10,8 @@ namespace WeatherReport.Helper
         {
             CreateMap<WeatherDto, Weather>();
             CreateMap<Weather, WeatherDto>();
+            CreateMap<LoginDto, User>();
+            CreateMap<SignUpDto, User>();
         }
     }
 }
